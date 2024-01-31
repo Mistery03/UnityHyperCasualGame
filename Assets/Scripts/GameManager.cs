@@ -8,14 +8,22 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameOverUI;
     public Text scoreText, scoreHudText;
-    public float scoreAmount = 100;
-    public float scoreMultiplier = 1;
-    public float totalScore = 0;
-    public float speedMultiplier = 1;
+    public float scoreAmount;
+    public float scoreMultiplier;
+    public float totalScore;
+    public float speedMultiplier ;
 
     public meteor meteorite;
 
     float _spaceshipFuelPercentage;
+
+    private void Awake()
+    {
+        scoreAmount = 100;
+        scoreMultiplier = 1;
+        totalScore = 0;
+        speedMultiplier = 1;
+    }
 
     private void Update()
     {
@@ -36,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     public void restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("GameScene");
     }
 
     public void setSpaceshipFuelLevel(float fuelPercentage)
@@ -71,6 +79,6 @@ public class GameManager : MonoBehaviour
 
     private void CalculateScore()
     {
-        totalScore += scoreMultiplier * scoreAmount * Time.deltaTime;
+        totalScore += scoreMultiplier * scoreAmount * Time.fixedUnscaledDeltaTime;
     }
 }

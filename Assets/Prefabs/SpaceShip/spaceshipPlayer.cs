@@ -21,7 +21,7 @@ public class spaceshipPlayer : MonoBehaviour
     public GameManager GameManager;
     public GameObject missile;
 
-    public bool isFreeze;
+    public bool isFreeze, isFiring;
 
 
     public float spawnRate = 0.1f; // Adjust this value to control the spawn rate
@@ -78,7 +78,7 @@ public class spaceshipPlayer : MonoBehaviour
             timeSinceLastSpawn += Time.deltaTime;
 
             // Check if enough time has passed to spawn a new object
-            if (timeSinceLastSpawn >= spawnRate)
+            if (isFiring && timeSinceLastSpawn >= spawnRate)
             {
                 shootProjectile();
                 timeSinceLastSpawn = 0f; // Reset the timer
@@ -108,10 +108,28 @@ public class spaceshipPlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-      
-        CurrentFuel += FuelFillAmount;
-        Destroy(collision.gameObject);
+      if(collision.gameObject.tag == "fuel") 
+      {
+            CurrentFuel += FuelFillAmount;
 
+            if (CurrentFuel >= MaxFuel)
+                CurrentFuel = MaxFuel;
+
+            Destroy(collision.gameObject);
+      }
+
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Meteor")
+        {
+            CurrentFuel -= FuelFillAmount;
+            FuelBar.SetFuel(CurrentFuel);
+
+            Destroy(collision.gameObject);
+        }
     }
 
     public float getFuelLevel()

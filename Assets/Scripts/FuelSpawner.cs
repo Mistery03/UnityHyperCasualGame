@@ -9,6 +9,8 @@ public class FuelSpawner : MonoBehaviour
     float _timer;
     public GameObject [] ArrayObject;
     [SerializeField] float _positionRange = 0.45f;
+
+ 
     void Start()
     {
         SpawnFuel();

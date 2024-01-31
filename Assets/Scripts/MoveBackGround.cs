@@ -17,7 +17,7 @@ public class MoveBackGround : MonoBehaviour
     {
         
         _startPos = transform.position;
-        currentSpeed = OriginalSpeed * Time.deltaTime;
+        currentSpeed = OriginalSpeed * Time.fixedDeltaTime;
         
 
     }

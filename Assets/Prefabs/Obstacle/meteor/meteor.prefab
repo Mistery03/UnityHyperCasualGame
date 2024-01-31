@@ -166,8 +166,9 @@ MonoBehaviour:
   CurrentMeteorHealth: 0
   MaxMeteorHealth: 1000
   meteorHealthPercentage: 0
-  GameManager: {fileID: 0}
+  SpeedMultiplier: 1
   meteorite: {fileID: 4766806856241808255}
+  fuel: {fileID: 1977694268850418637, guid: 63e7909bf3a45a44ab919a95470a0df7, type: 3}
 --- !u!50 &4766806856241808255
 Rigidbody2D:
   serializedVersion: 4

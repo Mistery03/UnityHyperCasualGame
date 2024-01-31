@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e49c73da1f11b248ab4629fe313054c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OriginalSpeed: 200
+  OriginalSpeed: 400
   currentSpeed: 5
   GameManager: {fileID: 169040302}
   _width: 8
@@ -1077,6 +1077,14 @@ PrefabInstance:
       propertyPath: missile
       value: 
       objectReference: {fileID: 6140751697416020940, guid: 500bdd53d667bb44bbc151cdaf542413, type: 3}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: isFiring
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: isFreeze
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: spawnRate
       value: 0.2

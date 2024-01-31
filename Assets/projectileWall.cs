@@ -16,12 +16,7 @@ public class projectileWall : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        print(collision.gameObject);
-        if(collision.gameObject.tag == "missile")
-            Destroy(collision.gameObject);
-    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
