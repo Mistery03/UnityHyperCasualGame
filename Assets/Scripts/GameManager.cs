@@ -8,16 +8,19 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameOverUI;
     public Text scoreText, scoreHudText;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float scoreAmount = 100;
+    public float scoreMultiplier = 1;
+    public float totalScore = 0;
+    public float speedMultiplier = 1;
 
-    // Update is called once per frame
-    void Update()
+    public meteor meteorite;
+
+    float _spaceshipFuelPercentage;
+
+    private void Update()
     {
-        
+        CalculateScore();
+        meteorite.SpeedMultiplier = getSpeedMultiplier();
     }
 
     public void scoreHUD(float currentScore)
@@ -34,5 +37,40 @@ public class GameManager : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void setSpaceshipFuelLevel(float fuelPercentage)
+    {
+        _spaceshipFuelPercentage = fuelPercentage;
+    }
+
+    public float getSpaceshipFuelLevel()
+    {
+        return _spaceshipFuelPercentage;
+    }
+
+    public void setScoreMultiplier(float scoreMultiplier)
+    {
+        this.scoreMultiplier = scoreMultiplier;
+    }
+
+    public float getScoreMultiplier()
+    {
+        return scoreMultiplier;
+    }
+
+    public void setSpeedMultiplier(float speedMultiplier)
+    {
+        this.speedMultiplier = speedMultiplier;
+    }
+
+    public float getSpeedMultiplier()
+    {
+        return speedMultiplier;
+    }
+
+    private void CalculateScore()
+    {
+        totalScore += scoreMultiplier * scoreAmount * Time.deltaTime;
     }
 }

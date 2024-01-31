@@ -21,6 +21,8 @@ public class spaceshipPlayer : MonoBehaviour
     public GameManager GameManager;
     public GameObject missile;
 
+    public bool isFreeze;
+
 
     public float spawnRate = 0.1f; // Adjust this value to control the spawn rate
 
@@ -35,7 +37,7 @@ public class spaceshipPlayer : MonoBehaviour
         Input.gyro.enabled = true;
         FuelBar.setMaxFuel(MaxFuel);
         FuelBar.SetFuel(CurrentFuel);
-        totalScore = 0;
+        GameManager.totalScore = 0;
 
 
     }
@@ -46,6 +48,7 @@ public class spaceshipPlayer : MonoBehaviour
         if(!isRanOutFuel)
         {
             fuelPercentage = CurrentFuel / MaxFuel;
+            GameManager.setSpaceshipFuelLevel(fuelPercentage);
             // Get the acceleration value along the x-axis
             x = Input.acceleration.x;
 
@@ -59,28 +62,31 @@ public class spaceshipPlayer : MonoBehaviour
 
            
 
-            GameManager.scoreHUD(totalScore);
-            drainFuel(DrainAmount);
+            GameManager.scoreHUD(GameManager.totalScore);
+
+            if(!isFreeze)
+                drainFuel(DrainAmount);
 
             if (CurrentFuel <= 0 && !isRanOutFuel)
             {
-                GameManager.GameOver(totalScore);
+                GameManager.GameOver(GameManager.totalScore);
                 isRanOutFuel = true;
               
             }
+
+            // Increment the timer
+            timeSinceLastSpawn += Time.deltaTime;
+
+            // Check if enough time has passed to spawn a new object
+            if (timeSinceLastSpawn >= spawnRate)
+            {
+                shootProjectile();
+                timeSinceLastSpawn = 0f; // Reset the timer
+            }
+
+    
         }
 
-        // Increment the timer
-        timeSinceLastSpawn += Time.deltaTime;
-
-        // Check if enough time has passed to spawn a new object
-        if (timeSinceLastSpawn >= spawnRate)
-        {
-            shootProjectile();
-            timeSinceLastSpawn = 0f; // Reset the timer
-        }
-
-  
 
     }  
 
@@ -102,7 +108,7 @@ public class spaceshipPlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Test collided");
+      
         CurrentFuel += FuelFillAmount;
         Destroy(collision.gameObject);
 

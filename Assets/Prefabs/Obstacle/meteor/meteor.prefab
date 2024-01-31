@@ -166,6 +166,8 @@ MonoBehaviour:
   CurrentMeteorHealth: 0
   MaxMeteorHealth: 1000
   meteorHealthPercentage: 0
+  GameManager: {fileID: 0}
+  meteorite: {fileID: 4766806856241808255}
 --- !u!50 &4766806856241808255
 Rigidbody2D:
   serializedVersion: 4
@@ -181,7 +183,7 @@ Rigidbody2D:
   m_Mass: 100
   m_LinearDrag: 10
   m_AngularDrag: 0.1
-  m_GravityScale: 0.8
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

@@ -8,6 +8,8 @@ public class meteor : MonoBehaviour
     public float CurrentMeteorHealth;
     public float MaxMeteorHealth;
     public float meteorHealthPercentage;
+    public float SpeedMultiplier;
+    public Rigidbody2D meteorite;
     void Start()
     {
         CurrentMeteorHealth = MaxMeteorHealth;
@@ -40,10 +42,27 @@ public class meteor : MonoBehaviour
         transform.localScale = newScale;
     }
 
+    void changeGravityScale()
+    {
+
+
+        // Define the initial scale and the minimum scale you want to reach
+        float initialGravityScale = 1f;
+        float minScale = 1f;
+
+        // Interpolate between the initial scale and the minimum scale based on health percentage
+        float newMultiplier = Mathf.Lerp(initialGravityScale, SpeedMultiplier, 1);
+
+        // Apply the new scale to the object
+        meteorite.gravityScale = newMultiplier;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (meteorHealthPercentage < 0)
             Destroy(GameObject.FindGameObjectWithTag("Meteor"));
+
+        changeGravityScale();   
     }
 }

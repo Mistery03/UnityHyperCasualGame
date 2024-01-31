@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 11767204}
   - component: {fileID: 11767203}
   - component: {fileID: 11767205}
-  - component: {fileID: 11767206}
   m_Layer: 0
   m_Name: spaceBackground
   m_TagString: Background
@@ -223,21 +222,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginalSpeed: 200
   currentSpeed: 5
-  speedMultiplier: 1
-  spaceship: {fileID: 955694136}
+  GameManager: {fileID: 169040302}
   _width: 8
---- !u!114 &11767206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 11767202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e12035dcc622a84a937257c551aa1d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &81061830
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,6 +460,11 @@ MonoBehaviour:
   gameOverUI: {fileID: 1713676232}
   scoreText: {fileID: 343859423}
   scoreHudText: {fileID: 667334097}
+  scoreAmount: 100
+  scoreMultiplier: 1
+  totalScore: 0
+  speedMultiplier: 1
+  meteorite: {fileID: 9201106019092973554, guid: e3f8e85ad1dcf68478ef772eadfaae69, type: 3}
 --- !u!4 &169040303
 Transform:
   m_ObjectHideFlags: 0
@@ -642,7 +633,8 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -724,14 +716,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &519420033
-BoxCollider2D:
+--- !u!114 &519420034
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 012ba97682019114699f309d17559058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!68 &519420035
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -753,22 +757,18 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0054154396, y: -0.00000047683716}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 1
-  serializedVersion: 2
-  m_Size: {x: 5.6636715, y: 10.01488}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.2
+  m_Points:
+  - {x: -2.811162, y: 5.0011396}
+  - {x: 2.8145576, y: 5.000503}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &667334095
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,17 +851,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667334095}
   m_CullTransparentMesh: 1
---- !u!114 &955694136 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
-  m_PrefabInstance: {fileID: 1054705958}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc87cb878fd31634885662cc3f9b3ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &973589764
 GameObject:
   m_ObjectHideFlags: 0
