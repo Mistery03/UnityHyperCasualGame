@@ -21,5 +21,6 @@ public class cardUpgrades : MonoBehaviour
     private void OnMouseDown()
     {
         OnSelected.Invoke();
+        //Destroy(gameObject);    
     }
 }

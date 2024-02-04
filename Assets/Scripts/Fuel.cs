@@ -11,7 +11,7 @@ public class Fuel : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Test");
+       
 
     }
 

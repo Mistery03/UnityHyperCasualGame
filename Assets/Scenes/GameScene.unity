@@ -1702,7 +1702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnRunOutOfFuel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2197,6 +2197,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4022f68a527e54d8c1f448542be473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UpgradeFuel:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 85846353}
+        m_TargetAssemblyTypeName: spaceshipPlayer, Assembly-CSharp
+        m_MethodName: increaseSpaceShipFuel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: unPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 474028874}
+        m_TargetAssemblyTypeName: selectorCardUI, Assembly-CSharp
+        m_MethodName: closeSelectorScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  UpgradeLevel:
+    m_PersistentCalls:
+      m_Calls: []
   ArrayObject:
   - {fileID: 5297811759600934661, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
   - {fileID: 7753847221942046680, guid: 1b5ecc1f89aa8c94a961d55df4d38008, type: 3}

@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FuelCard
       objectReference: {fileID: 0}
+    - target: {fileID: 5297811759600934661, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
+      propertyPath: m_TagString
+      value: fuel
+      objectReference: {fileID: 0}
     - target: {fileID: 6784693299700076467, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
       propertyPath: m_RootOrder
       value: 0
