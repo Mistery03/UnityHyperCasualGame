@@ -42,7 +42,7 @@ public class MoveBackGround : MonoBehaviour
         } 
         else if (fuelLevel <= 0.15)
         {
-            GameManager.setSpeedMultiplier(16f);
+            GameManager.setSpeedMultiplier(8f);
             GameManager.setScoreMultiplier(10f);
   
         }

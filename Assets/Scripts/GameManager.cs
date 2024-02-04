@@ -7,22 +7,25 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject gameOverUI;
-    public Text scoreText, scoreHudText;
+    public Text ScoreText, ScoreHudText, LevelText, LevelHudText;
     public float scoreAmount;
     public float scoreMultiplier;
     public float totalScore;
-    public float speedMultiplier ;
+    public int currentLevel;
+    public float speedMultiplier;
 
     public meteor meteorite;
 
-    float _spaceshipFuelPercentage;
+    float _spaceshipFuelPercentage, _spaceShipDamage;
 
     private void Awake()
     {
         scoreAmount = 100;
         scoreMultiplier = 1;
         totalScore = 0;
+        currentLevel = 0;
         speedMultiplier = 1;
+        levelHUD(currentLevel);
     }
 
     private void Update()
@@ -33,13 +36,19 @@ public class GameManager : MonoBehaviour
 
     public void scoreHUD(float currentScore)
     {
-        scoreHudText.text = "SCORE: "+((int)currentScore).ToString();
+        ScoreHudText.text = "SCORE: "+((int)currentScore).ToString();
+    }
+
+    public void levelHUD(int currentLevel)
+    {
+        LevelHudText.text = "Level: " + (currentLevel).ToString();
     }
 
     public void GameOver(float totalScore)
     {
         gameOverUI.SetActive(true);
-        scoreText.text = "SCORE: " + ((int)totalScore).ToString();
+        ScoreText.text = "SCORE: " + ((int)totalScore).ToString();
+        LevelText.text = "LEVEL: " + (currentLevel).ToString();
     }
 
     public void restart()
@@ -55,6 +64,14 @@ public class GameManager : MonoBehaviour
     public float getSpaceshipFuelLevel()
     {
         return _spaceshipFuelPercentage;
+    }
+    public void setSpaceshipDamage(float dmg)
+    {
+       _spaceShipDamage = dmg;
+    }
+    public float getSpaceshipDamage()
+    {
+        return _spaceShipDamage;
     }
 
     public void setScoreMultiplier(float scoreMultiplier)
@@ -79,6 +96,13 @@ public class GameManager : MonoBehaviour
 
     private void CalculateScore()
     {
-        totalScore += scoreMultiplier * scoreAmount * Time.fixedUnscaledDeltaTime;
+        totalScore += scoreMultiplier * scoreAmount * Time.deltaTime;
     }
+
+    public void unPause()
+    {
+        Time.timeScale = 1.0f;
+    }
+
+    
 }

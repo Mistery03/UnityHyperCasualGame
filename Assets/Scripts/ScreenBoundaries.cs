@@ -20,7 +20,7 @@ public class ScreenBoundaries : MonoBehaviour
     {
         Vector3 viewPos = transform.position;
         viewPos.x = Mathf.Clamp(viewPos.x, -_screenBounds.x  + _objectWidth , _screenBounds.x - _objectWidth) ;
-        //viewPos.y = Mathf.Clamp(viewPos.y, _screenBounds.y * -1 - _objectHeight, _screenBounds.y + _objectHeight);
+        viewPos.y = Mathf.Clamp(viewPos.y, -_screenBounds.y  + _objectHeight, _screenBounds.y - _objectHeight);
       
         transform.position = viewPos;
     }

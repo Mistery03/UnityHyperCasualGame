@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class projectileWall : MonoBehaviour
+public class selectorCardUI : MonoBehaviour
 {
+    public GameObject selector;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,12 +18,14 @@ public class projectileWall : MonoBehaviour
         
     }
 
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void openSelectorScreen()
     {
-        if (collision.gameObject.tag == "missile")
-            Destroy(collision.gameObject);
+        selector.SetActive(true);
+    }
+
+    public void closeSelectorScreen() 
+    {
+        selector.SetActive(false);
     }
 
 

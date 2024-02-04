@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class meteor : MonoBehaviour
 {
@@ -9,13 +10,18 @@ public class meteor : MonoBehaviour
     public float MaxMeteorHealth;
     public float meteorHealthPercentage;
     public float SpeedMultiplier;
+    public float speed;
     public Rigidbody2D meteorite;
     public Rigidbody2D fuel;
+
+    public UnityEvent OnHit;
+
+ 
     void Start()
     {
         CurrentMeteorHealth = MaxMeteorHealth;
         meteorHealthPercentage = CurrentMeteorHealth / MaxMeteorHealth;
-        meteorite.gravityScale = 1;
+    
 
     }
 
@@ -24,12 +30,12 @@ public class meteor : MonoBehaviour
         if(collision.gameObject.tag == "missile")
             Destroy(collision.gameObject);
 
-        CurrentMeteorHealth -= 50;
-        meteorHealthPercentage = CurrentMeteorHealth / MaxMeteorHealth;
-        ScaleObject(meteorHealthPercentage);
+
+        OnHit.Invoke();
+        
     }
 
-    void ScaleObject(float healthPercentage)
+    public void ScaleObject(float healthPercentage)
     {
         // Ensure the percentage is within valid range (0 to 1)
         healthPercentage = Mathf.Clamp01(healthPercentage);
@@ -45,25 +51,12 @@ public class meteor : MonoBehaviour
         transform.localScale = newScale;
     }
 
-    /*void changeGravityScale()
-    {
-
-
-        // Define the initial scale and the minimum scale you want to reach
-        float initialGravityScale = 1f;
-        float minScale = 1f;
-
-        // Interpolate between the initial scale and the minimum scale based on health percentage
-        float newMultiplier = Mathf.Lerp(initialGravityScale, SpeedMultiplier, 5);
-
-        // Apply the new scale to the object
-        meteorite.gravityScale = newMultiplier;
-    }*/
+   
 
     // Update is called once per frame
     void Update()
     {
-        if (meteorHealthPercentage < 0)
+        if (meteorHealthPercentage < 0.2f)
         {
             Destroy(GameObject.FindGameObjectWithTag("Meteor"));
            
@@ -72,13 +65,19 @@ public class meteor : MonoBehaviour
             Rigidbody2D CopyOfObject = Instantiate(fuel, spawnPos, Quaternion.identity);
             Destroy(CopyOfObject, 10);
             
-            
 
-            
-           
         }
 
-
-        meteorite.gravityScale = SpeedMultiplier;
+        transform.position += new Vector3(0, -1, 0) * speed * SpeedMultiplier * Time.deltaTime; 
+        
     }
+
+    public void DamageMeteor(int dmg)
+    {
+       CurrentMeteorHealth -= dmg;
+        meteorHealthPercentage = CurrentMeteorHealth /MaxMeteorHealth;
+        ScaleObject(meteorHealthPercentage);
+    }
+
+
 }

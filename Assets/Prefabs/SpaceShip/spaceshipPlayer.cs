@@ -2,20 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Events;
 
 public class spaceshipPlayer : MonoBehaviour
 {
     // Start is called before the first frame update
     float _speed, x, y;
     Vector2 _screenBounds;
+
+    public UnityEvent OnRunOutOfFuel, OnHit, OnLevelUp;
     public float MaxFuel = 100;
     public float CurrentFuel, FuelFillAmount, DrainAmount;
-    public float scoreAmount = 0;
+    public float ScoreAmount = 0;
     public float scoreMultiplier = 1;
     public float totalScore = 0;
 
+    public float MaxLevel = 10;
+    public float Currentlevel = 0;
+    public float CurrentXp, TargetXp;
+
+    public float damage;
+
     private float fuelPercentage;
-    private float _timer;
 
     public FuelBarObject FuelBar;
     public GameManager GameManager;
@@ -38,7 +46,7 @@ public class spaceshipPlayer : MonoBehaviour
         FuelBar.setMaxFuel(MaxFuel);
         FuelBar.SetFuel(CurrentFuel);
         GameManager.totalScore = 0;
-
+        GameManager.setSpaceshipDamage(damage);
 
     }
 
@@ -49,30 +57,18 @@ public class spaceshipPlayer : MonoBehaviour
         {
             fuelPercentage = CurrentFuel / MaxFuel;
             GameManager.setSpaceshipFuelLevel(fuelPercentage);
-            // Get the acceleration value along the x-axis
-            x = Input.acceleration.x;
 
-            if (Input.GetKey(KeyCode.A))
-                transform.position -= new Vector3(_speed * Time.deltaTime, 0, 0);
-            else if (Input.GetKey(KeyCode.D))
-                transform.position += new Vector3(_speed * Time.deltaTime, 0, 0);
+            SpaceshipMovement();
 
-            // Move the object by adding the acceleration value multiplied by the speed and the time between frames
-            transform.position += new Vector3(x * _speed * Time.deltaTime, 0, 0);
-
-           
 
             GameManager.scoreHUD(GameManager.totalScore);
 
             if(!isFreeze)
                 drainFuel(DrainAmount);
 
-            if (CurrentFuel <= 0 && !isRanOutFuel)
-            {
-                GameManager.GameOver(GameManager.totalScore);
-                isRanOutFuel = true;
-              
-            }
+            if (CurrentFuel <= 0)
+                OnRunOutOfFuel.Invoke();
+                
 
             // Increment the timer
             timeSinceLastSpawn += Time.deltaTime;
@@ -84,11 +80,31 @@ public class spaceshipPlayer : MonoBehaviour
                 timeSinceLastSpawn = 0f; // Reset the timer
             }
 
+            CurrentXp += 1 * Time.deltaTime;
+
+            if(CurrentXp >= TargetXp)
+            {
+                OnLevelUp.Invoke();
+            }
     
         }
 
 
     }  
+
+    void SpaceshipMovement()
+    {
+        // Get the acceleration value along the x-axis
+        x = Input.acceleration.x;
+        y = Input.acceleration.y;
+
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0) * _speed * Time.deltaTime;
+        transform.position += movement;
+        transform.position += new Vector3(x * _speed * Time.deltaTime, y * _speed * Time.deltaTime, 0);
+    }
 
     void shootProjectile()
     {
@@ -125,8 +141,7 @@ public class spaceshipPlayer : MonoBehaviour
     {
         if (collision.gameObject.tag == "Meteor")
         {
-            CurrentFuel -= FuelFillAmount;
-            FuelBar.SetFuel(CurrentFuel);
+            OnHit.Invoke();
 
             Destroy(collision.gameObject);
         }
@@ -136,4 +151,39 @@ public class spaceshipPlayer : MonoBehaviour
     {
         return fuelPercentage;
     }
+
+    public void GameOverScreen()
+    {
+        GameManager.GameOver(GameManager.totalScore);
+        isRanOutFuel = true;
+        GameManager.LevelHudText.enabled = false;
+        GameManager.ScoreHudText.enabled = false;
+
+    }
+
+    public void DamageSpaceShip()
+    {
+        CurrentFuel -= FuelFillAmount;
+        FuelBar.SetFuel(CurrentFuel);
+    }
+
+    public void LevelUpSpaceship()
+    {
+        CurrentXp = CurrentXp - TargetXp;
+     
+        GameManager.levelHUD(GameManager.currentLevel += 1);
+        TargetXp += 10;
+        Time.timeScale = 0f;
+
+    }
+
+    public void increaseSpaceShipFuel()
+    {
+        MaxFuel += 100;
+        CurrentFuel = MaxFuel;
+        FuelBar.setMaxFuel(MaxFuel);
+        FuelBar.SetFuel(CurrentFuel);
+    }
+
+  
 }

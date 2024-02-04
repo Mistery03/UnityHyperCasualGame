@@ -10,8 +10,7 @@ public class FuelSpawner : MonoBehaviour
     public GameObject [] ArrayObject;
     [SerializeField] float _positionRange = 0.45f;
 
- 
-    void Start()
+    private void Awake()
     {
         SpawnFuel();
     }
