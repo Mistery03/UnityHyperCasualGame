@@ -8,6 +8,9 @@ public class FuelBarObject : MonoBehaviour
     public Slider slider;
     public Gradient gradient;
     public Image fill;
+    public Color freezeCOL;
+
+    bool isFreeze;
 
     public void setMaxFuel(float fuel)
     {
@@ -19,5 +22,16 @@ public class FuelBarObject : MonoBehaviour
         slider.value = fuel;
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
+
+    public void setIsFreeze(bool isFreeze)
+    { 
+        this.isFreeze = isFreeze;
+
+        if(!this.isFreeze)
+            fill.color = gradient.Evaluate(slider.normalizedValue);
+        else
+            fill.color = freezeCOL;
+    }
+
     
 }

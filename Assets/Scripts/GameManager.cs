@@ -26,11 +26,13 @@ public class GameManager : MonoBehaviour
         currentLevel = 0;
         speedMultiplier = 1;
         levelHUD(currentLevel);
+        scoreHUD(totalScore);
     }
 
     private void Update()
     {
         CalculateScore();
+        scoreHUD(totalScore);
         meteorite.SpeedMultiplier = getSpeedMultiplier();
     }
 
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     public void levelHUD(int currentLevel)
     {
-        LevelHudText.text = "Level: " + (currentLevel).ToString();
+        LevelHudText.text = "LEVEL: " + (currentLevel).ToString();
     }
 
     public void GameOver(float totalScore)
@@ -97,6 +99,7 @@ public class GameManager : MonoBehaviour
     private void CalculateScore()
     {
         totalScore += scoreMultiplier * scoreAmount * Time.deltaTime;
+      
     }
 
     public void unPause()
@@ -104,5 +107,26 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    
+    public void IncreaseScore()
+    {
+        totalScore += 1000;
+      
+        
+    }
+
+    public void disableHUDTexts()
+    {
+        LevelHudText.enabled = false;
+        ScoreHudText.enabled = false;
+    }
+
+    public void enableHUDTexts()
+    {
+        LevelHudText.enabled = true;
+        ScoreHudText.enabled = true;
+    }
+
+
+
+
 }

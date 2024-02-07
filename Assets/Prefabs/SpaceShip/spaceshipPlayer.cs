@@ -10,6 +10,8 @@ public class spaceshipPlayer : MonoBehaviour
     float _speed, x, y;
     Vector2 _screenBounds;
 
+    public AudioSource missleSFX;
+
     public UnityEvent OnRunOutOfFuel, OnHit, OnLevelUp;
     public float MaxFuel = 100;
     public float CurrentFuel, FuelFillAmount, DrainAmount;
@@ -30,6 +32,8 @@ public class spaceshipPlayer : MonoBehaviour
     public GameObject missile;
 
     public bool isFreeze, isFiring;
+
+    public float duration = 10f;
 
 
     public float spawnRate = 0.1f; // Adjust this value to control the spawn rate
@@ -61,7 +65,7 @@ public class spaceshipPlayer : MonoBehaviour
             SpaceshipMovement();
 
 
-            GameManager.scoreHUD(GameManager.totalScore);
+            //GameManager.scoreHUD(GameManager.totalScore);
 
             if(!isFreeze)
                 drainFuel(DrainAmount);
@@ -111,6 +115,7 @@ public class spaceshipPlayer : MonoBehaviour
         GameObject copyMissile = Instantiate(missile, transform.position + new Vector3(0,2,0), Quaternion.Euler(0, 0, 90));
         Rigidbody2D rb = copyMissile.GetComponent<Rigidbody2D>();
         rb.AddForce(transform.forward * 100, ForceMode2D.Impulse);
+        missleSFX.Play();
 
         Destroy(copyMissile, 15f);
     }
@@ -144,6 +149,19 @@ public class spaceshipPlayer : MonoBehaviour
             OnHit.Invoke();
 
             Destroy(collision.gameObject);
+        }else if (collision.gameObject.tag == "shoot")
+        {
+            if(!isFiring)
+                StartCoroutine(ActivateShootPowerUp());
+        
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.tag == "freeze")
+        {
+            if (!isFreeze)
+                StartCoroutine(ActivateFreeze());
+
+            Destroy(collision.gameObject);
         }
     }
 
@@ -156,15 +174,19 @@ public class spaceshipPlayer : MonoBehaviour
     {
         GameManager.GameOver(GameManager.totalScore);
         isRanOutFuel = true;
-        GameManager.LevelHudText.enabled = false;
-        GameManager.ScoreHudText.enabled = false;
+        GameManager.disableHUDTexts();
+     
 
     }
 
     public void DamageSpaceShip()
     {
-        CurrentFuel -= FuelFillAmount;
-        FuelBar.SetFuel(CurrentFuel);
+        if(!isFreeze)
+        {
+            CurrentFuel -= FuelFillAmount;
+            FuelBar.SetFuel(CurrentFuel);
+        }
+        
     }
 
     public void LevelUpSpaceship()
@@ -183,7 +205,40 @@ public class spaceshipPlayer : MonoBehaviour
         CurrentFuel = MaxFuel;
         FuelBar.setMaxFuel(MaxFuel);
         FuelBar.SetFuel(CurrentFuel);
+        isFreeze = false;
     }
 
-  
+    IEnumerator ActivateShootPowerUp()
+    {
+        isFiring = true;
+        Debug.Log("Power-up activated!");
+
+        // Add your power-up effects here
+
+        yield return new WaitForSeconds(duration);
+
+        Debug.Log("Power-up deactivated.");
+        isFiring = false;
+
+        // Clean up or remove power-up effects here
+    }
+
+    IEnumerator ActivateFreeze()
+    {
+        isFreeze = true;
+        Debug.Log("Power-up activated!");
+
+        // Add your power-up effects here
+        FuelBar.setIsFreeze(isFreeze);
+
+        yield return new WaitForSeconds(duration);
+
+        Debug.Log("Power-up deactivated.");
+        isFreeze = false;
+        FuelBar.setIsFreeze(isFreeze);
+
+        // Clean up or remove power-up effects here
+    }
+
+
 }

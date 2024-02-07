@@ -8,6 +8,8 @@ TagManager:
   - missile
   - Meteor
   - fuel
+  - shoot
+  - freeze
   layers:
   - Default
   - TransparentFX

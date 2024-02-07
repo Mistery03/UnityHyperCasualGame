@@ -14,7 +14,7 @@ public class meteor : MonoBehaviour
     public Rigidbody2D meteorite;
     public Rigidbody2D fuel;
 
-    public UnityEvent OnHit;
+    public UnityEvent OnHit, OnDestroy;
 
  
     void Start()
@@ -28,10 +28,16 @@ public class meteor : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "missile")
+        {
             Destroy(collision.gameObject);
+            OnHit.Invoke();
+        }else if(collision.gameObject.tag == "Player")
+            OnHit.Invoke();
+        
+            
 
 
-        OnHit.Invoke();
+      
         
     }
 
@@ -63,6 +69,7 @@ public class meteor : MonoBehaviour
 
             Vector3 spawnPos = transform.position + new Vector3(Random.Range(-1, 1), 0, 0);
             Rigidbody2D CopyOfObject = Instantiate(fuel, spawnPos, Quaternion.identity);
+            OnDestroy.Invoke();
             Destroy(CopyOfObject, 10);
             
 
@@ -74,7 +81,7 @@ public class meteor : MonoBehaviour
 
     public void DamageMeteor(int dmg)
     {
-       CurrentMeteorHealth -= dmg;
+        CurrentMeteorHealth -= dmg;
         meteorHealthPercentage = CurrentMeteorHealth /MaxMeteorHealth;
         ScaleObject(meteorHealthPercentage);
     }
