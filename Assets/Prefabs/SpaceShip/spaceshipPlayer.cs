@@ -12,7 +12,8 @@ public class spaceshipPlayer : MonoBehaviour
 
     public AudioSource missleSFX;
 
-    public UnityEvent OnRunOutOfFuel, OnHit, OnLevelUp;
+    public UnityEvent OnRunOutOfFuel, OnLevelUp, OnHitFreeze;
+    public UnityEvent<Collision2D> OnHit;
     public float MaxFuel = 100;
     public float CurrentFuel, FuelFillAmount, DrainAmount;
     public float ScoreAmount = 0;
@@ -51,6 +52,7 @@ public class spaceshipPlayer : MonoBehaviour
         FuelBar.SetFuel(CurrentFuel);
         GameManager.totalScore = 0;
         GameManager.setSpaceshipDamage(damage);
+        Time.timeScale = 1f;
 
     }
 
@@ -146,10 +148,16 @@ public class spaceshipPlayer : MonoBehaviour
     {
         if (collision.gameObject.tag == "Meteor")
         {
-            OnHit.Invoke();
-
+            OnHit.Invoke(collision);
             Destroy(collision.gameObject);
-        }else if (collision.gameObject.tag == "shoot")
+
+        }
+        else if (collision.gameObject.tag == "ColdMeteor")
+        {
+            OnHitFreeze.Invoke();
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.tag == "shoot")
         {
             if(!isFiring)
                 StartCoroutine(ActivateShootPowerUp());
@@ -161,6 +169,11 @@ public class spaceshipPlayer : MonoBehaviour
             if (!isFreeze)
                 StartCoroutine(ActivateFreeze());
 
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.tag == "eyes")
+        {
+            OnHit.Invoke(collision);
             Destroy(collision.gameObject);
         }
     }
@@ -175,16 +188,26 @@ public class spaceshipPlayer : MonoBehaviour
         GameManager.GameOver(GameManager.totalScore);
         isRanOutFuel = true;
         GameManager.disableHUDTexts();
+        Time.timeScale = 0f;
      
 
     }
 
-    public void DamageSpaceShip()
+    public void DamageSpaceShip(Collision2D collidedObject)
     {
         if(!isFreeze)
         {
-            CurrentFuel -= FuelFillAmount;
-            FuelBar.SetFuel(CurrentFuel);
+            if(collidedObject.gameObject.tag == "Meteor")
+            {
+                CurrentFuel -= FuelFillAmount;
+                FuelBar.SetFuel(CurrentFuel);
+            }else if (collidedObject.gameObject.tag == "eyes")
+            {
+                CurrentFuel -= FuelFillAmount*2;
+                FuelBar.SetFuel(CurrentFuel);
+            }
+
+
         }
         
     }
@@ -211,13 +234,13 @@ public class spaceshipPlayer : MonoBehaviour
     IEnumerator ActivateShootPowerUp()
     {
         isFiring = true;
-        Debug.Log("Power-up activated!");
+      
 
         // Add your power-up effects here
 
         yield return new WaitForSeconds(duration);
 
-        Debug.Log("Power-up deactivated.");
+    
         isFiring = false;
 
         // Clean up or remove power-up effects here
@@ -226,14 +249,14 @@ public class spaceshipPlayer : MonoBehaviour
     IEnumerator ActivateFreeze()
     {
         isFreeze = true;
-        Debug.Log("Power-up activated!");
+       
 
         // Add your power-up effects here
         FuelBar.setIsFreeze(isFreeze);
 
         yield return new WaitForSeconds(duration);
 
-        Debug.Log("Power-up deactivated.");
+ 
         isFreeze = false;
         FuelBar.setIsFreeze(isFreeze);
 

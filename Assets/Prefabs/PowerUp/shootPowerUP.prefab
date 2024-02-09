@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3151435729289325708}
   - component: {fileID: 8210848291476319836}
   - component: {fileID: 4988123091596404734}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: shootPowerUP
   m_TagString: shoot
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5028522945602627394}
   - component: {fileID: 5579158522849868990}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: space
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6038548304746371974}
   - component: {fileID: 6440792000799236595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7081782407545411780}
   - component: {fileID: 4871837021523527251}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: waveMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginalSpeed: 600
-  currentSpeed: 5
+  currentSpeed: 0
   GameManager: {fileID: 169040302}
   _width: 8
 --- !u!1 &81061830
@@ -468,6 +468,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f8be2dad6165742ac33a5574b9e628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnLowSpeed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 85846353}
+        m_TargetAssemblyTypeName: spaceshipPlayer, Assembly-CSharp
+        m_MethodName: GameOverScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   gameOverUI: {fileID: 1713676232}
   ScoreText: {fileID: 343859423}
   ScoreHudText: {fileID: 667334097}
@@ -475,9 +490,10 @@ MonoBehaviour:
   LevelHudText: {fileID: 802983220}
   scoreAmount: 100
   scoreMultiplier: 1
+  speedMultiplier: 1
   totalScore: 0
   currentLevel: 0
-  speedMultiplier: 1
+  currentSpeed: 0
   meteorite: {fileID: 9201106019092973554, guid: e3f8e85ad1dcf68478ef772eadfaae69, type: 3}
 --- !u!4 &169040303
 Transform:
@@ -494,6 +510,155 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &232254438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 232254439}
+  - component: {fileID: 232254440}
+  m_Layer: 0
+  m_Name: cardSpawner2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &232254439
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232254438}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19, y: 185, z: -12802.276}
+  m_LocalScale: {x: 142.24751, y: 142.24751, z: 142.24751}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 474028870}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &232254440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232254438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4022f68a527e54d8c1f448542be473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpgradeFuel:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 85846353}
+        m_TargetAssemblyTypeName: spaceshipPlayer, Assembly-CSharp
+        m_MethodName: increaseSpaceShipFuel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: unPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 474028874}
+        m_TargetAssemblyTypeName: selectorCardUI, Assembly-CSharp
+        m_MethodName: closeSelectorScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: enableHUDTexts
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  UpgradeSpeed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11767205}
+        m_TargetAssemblyTypeName: MoveBackGround, Assembly-CSharp
+        m_MethodName: increaseSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: unPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 474028874}
+        m_TargetAssemblyTypeName: selectorCardUI, Assembly-CSharp
+        m_MethodName: closeSelectorScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: enableHUDTexts
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ArrayObject:
+  - {fileID: 3252832374507234691, guid: f8b5c03ba78b49d43bfc55ed68fde286, type: 3}
+  - {fileID: 7753847221942046680, guid: 1b5ecc1f89aa8c94a961d55df4d38008, type: 3}
 --- !u!1001 &250096689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,6 +674,10 @@ PrefabInstance:
     - target: {fileID: 5297811759600934661, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
       propertyPath: m_Name
       value: LevelUpCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5297811759600934661, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5698461906523880041, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
       propertyPath: OnSelected.m_PersistentCalls.m_Calls.Array.size
@@ -749,6 +918,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1690458898}
+  - {fileID: 232254439}
   - {fileID: 1740570728}
   - {fileID: 924409672}
   m_Father: {fileID: 1743130700}
@@ -853,7 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxTime: 3
   ArrayObject:
-  - {fileID: 6602264474714263170, guid: e3f8e85ad1dcf68478ef772eadfaae69, type: 3}
+  - {fileID: 6201182560578874427, guid: 6772e08fa8903dc42b9a5d837ead3fad, type: 3}
   - {fileID: 6602264474714263170, guid: e3f8e85ad1dcf68478ef772eadfaae69, type: 3}
   _positionRange: 2
   OnMeteorDestroy:
@@ -1601,7 +1771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: isFiring
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: isFreeze
@@ -1649,7 +1819,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnRunOutOfFuel.m_PersistentCalls.m_Calls.Array.size
@@ -1688,6 +1862,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
       objectReference: {fileID: 0}
@@ -1702,6 +1880,14 @@ PrefabInstance:
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: DamageSpaceShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1720,6 +1906,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 169040302}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 232254440}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 11767205}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11767205}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -1733,6 +1931,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
@@ -1756,9 +1958,29 @@ PrefabInstance:
       value: disableHUDTexts
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: SpawnCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnRunOutOfFuel.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 85846353}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: decreaseSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: decreaseSpeed
+      objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnRunOutOfFuel.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
@@ -1792,6 +2014,26 @@ PrefabInstance:
       value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: cardSpawner, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MoveBackGround, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MoveBackGround, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnRunOutOfFuel.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: spaceshipPlayer, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -1817,6 +2059,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
+      propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
@@ -2307,11 +2561,59 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  UpgradeLevel:
+  UpgradeSpeed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11767205}
+        m_TargetAssemblyTypeName: MoveBackGround, Assembly-CSharp
+        m_MethodName: increaseSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: unPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 474028874}
+        m_TargetAssemblyTypeName: selectorCardUI, Assembly-CSharp
+        m_MethodName: closeSelectorScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: enableHUDTexts
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   ArrayObject:
-  - {fileID: 5297811759600934661, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
+  - {fileID: 3252832374507234691, guid: f8b5c03ba78b49d43bfc55ed68fde286, type: 3}
   - {fileID: 7753847221942046680, guid: 1b5ecc1f89aa8c94a961d55df4d38008, type: 3}
 --- !u!1 &1709698448
 GameObject:
@@ -2597,6 +2899,7 @@ MonoBehaviour:
   ArrayObject:
   - {fileID: 6597011311283918294, guid: 6de4034f84216174d92a2b3e496a9384, type: 3}
   - {fileID: 2753073158994547249, guid: 927a662cf15496049b2794c8395823e0, type: 3}
+  - {fileID: 3883832236036645920, guid: 5630962f09d77234dbfade5b3d4abda6, type: 3}
   _positionRange: 2
   OnMeteorDestroy:
     m_PersistentCalls:

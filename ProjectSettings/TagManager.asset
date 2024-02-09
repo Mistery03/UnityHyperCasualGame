@@ -10,6 +10,8 @@ TagManager:
   - fuel
   - shoot
   - freeze
+  - ColdMeteor
+  - speed
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Meteor
+  - Powerup
   - 
   - 
   - 

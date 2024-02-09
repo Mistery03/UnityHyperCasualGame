@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2576851503653211739}
   - component: {fileID: 1245308375480739496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: snowflake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5721908221297529097}
   - component: {fileID: 5424515525754879898}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FuelCell_small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,6 +181,10 @@ PrefabInstance:
       value: freezeFuelPowerUp
       objectReference: {fileID: 0}
     - target: {fileID: 2753073158994547249, guid: 927a662cf15496049b2794c8395823e0, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2753073158994547249, guid: 927a662cf15496049b2794c8395823e0, type: 3}
       propertyPath: m_TagString
       value: freeze
       objectReference: {fileID: 0}
@@ -227,6 +231,10 @@ PrefabInstance:
     - target: {fileID: 3151435729289325708, guid: 927a662cf15496049b2794c8395823e0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3561771261952533640, guid: 927a662cf15496049b2794c8395823e0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6440792000799236595, guid: 927a662cf15496049b2794c8395823e0, type: 3}
       propertyPath: m_Color.a

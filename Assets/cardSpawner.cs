@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class cardSpawner : MonoBehaviour
 {
-    public UnityEvent UpgradeFuel, UpgradeLevel;
+    public UnityEvent UpgradeFuel, UpgradeSpeed;
     public GameObject[] ArrayObject;
     GameObject CopyOfObject;
 
@@ -23,12 +23,12 @@ public class cardSpawner : MonoBehaviour
     public void SpawnCard()
     {
 
-        int indexer = Random.Range(0, ArrayObject.Length);
-        CopyOfObject = Instantiate(ArrayObject[1], transform);
+        int index = Random.Range(0, ArrayObject.Length);
+        CopyOfObject = Instantiate(ArrayObject[index], transform);
         CopyOfObject.GetComponent<cardUpgrades>().OnSelected.AddListener(invokeEvents);
        
         
-        //Destroy(CopyOfObject, 15f);
+        Destroy(CopyOfObject, 15f);
     }
 
     public void invokeEvents()
@@ -38,6 +38,10 @@ public class cardSpawner : MonoBehaviour
       
         if(CopyOfObject.tag == "fuel")
             UpgradeFuel.Invoke();
+        else if (CopyOfObject.tag == "speed")
+            UpgradeSpeed.Invoke();
+
+    
 
     }
 }

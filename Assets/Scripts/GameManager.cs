@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    public UnityEvent OnLowSpeed, OnLowFuel;
     public GameObject gameOverUI;
-    public Text ScoreText, ScoreHudText, LevelText, LevelHudText;
+    public Text ScoreText, ScoreHudText, LevelText, LevelHudText, WarningAlertText;
     public float scoreAmount;
-    public float scoreMultiplier;
+    public float scoreMultiplier, speedMultiplier;
     public float totalScore;
     public int currentLevel;
-    public float speedMultiplier;
+    public float currentSpeed;
+
+    bool isWarningDisplayed;
 
     public meteor meteorite;
 
@@ -27,6 +31,13 @@ public class GameManager : MonoBehaviour
         speedMultiplier = 1;
         levelHUD(currentLevel);
         scoreHUD(totalScore);
+        
+
+    }
+
+    private void Start()
+    {
+        WarningAlertText.text = null;
     }
 
     private void Update()
@@ -34,6 +45,28 @@ public class GameManager : MonoBehaviour
         CalculateScore();
         scoreHUD(totalScore);
         meteorite.SpeedMultiplier = getSpeedMultiplier();
+
+        if(currentSpeed <= 0)
+            OnLowSpeed.Invoke();
+
+
+        if(getSpaceshipFuelLevel() <= 0.30 && !isWarningDisplayed)
+        {
+            WarningAlertText.text = "LOW FUEL!";
+            isWarningDisplayed = true;
+            StartBlink();
+        }
+        else if(getSpaceshipFuelLevel() > 0.30 && isWarningDisplayed)
+        {
+            WarningAlertText.text = "";
+            isWarningDisplayed = false;
+            StopBlink();
+        }
+           
+           
+
+
+
     }
 
     public void scoreHUD(float currentScore)
@@ -56,6 +89,7 @@ public class GameManager : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene("GameScene");
+        
     }
 
     public void setSpaceshipFuelLevel(float fuelPercentage)
@@ -118,13 +152,54 @@ public class GameManager : MonoBehaviour
     {
         LevelHudText.enabled = false;
         ScoreHudText.enabled = false;
+        WarningAlertText.enabled= false;
+
     }
 
     public void enableHUDTexts()
     {
         LevelHudText.enabled = true;
         ScoreHudText.enabled = true;
+        WarningAlertText.enabled = true;
     }
+
+    public void setCurrentSpeed(float speed)
+    {
+        currentSpeed = speed;
+    }
+
+    private IEnumerator Blink()
+    {
+        while (true)
+        {
+            switch (WarningAlertText.color.a.ToString())
+            {
+                case "0":
+                    WarningAlertText.color = new Color(WarningAlertText.color.r, WarningAlertText.color.g, WarningAlertText.color.b, 1);
+                    yield return new WaitForSeconds(0.5f);
+                    break;
+                case "1":
+                    WarningAlertText.color = new Color(WarningAlertText.color.r, WarningAlertText.color.g, WarningAlertText.color.b, 0);
+                    yield return new WaitForSeconds(0.5f);
+                    break;
+            }
+        }
+    }
+
+    public void StartBlink()
+    {
+        StopCoroutine("Blink");
+        StartCoroutine("Blink");
+    }
+
+    public void StopBlink()
+    {
+        StopCoroutine("Blink");
+   
+    }
+
+
+
 
 
 

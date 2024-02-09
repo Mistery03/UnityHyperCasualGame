@@ -47,13 +47,5 @@ public class PowerupSpawner : MonoBehaviour
         Destroy(CopyOfObject, 10f);
     }
 
-    public void invokeEvents()
-    {
-
-
-        Debug.Log("test destroy");
-        if (CopyOfObject.tag == "Meteor")
-            OnMeteorDestroy.Invoke();
-
-    }
+ 
 }
