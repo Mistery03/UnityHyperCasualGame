@@ -177,4 +177,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e65907ecabe3704bae587d432e23eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MissileDamage: 200
+  MissileDamage: 250

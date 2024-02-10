@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         CalculateScore();
         scoreHUD(totalScore);
-        meteorite.SpeedMultiplier = getSpeedMultiplier();
+        //meteorite.SpeedMultiplier = getSpeedMultiplier();
 
         if(currentSpeed <= 0)
             OnLowSpeed.Invoke();

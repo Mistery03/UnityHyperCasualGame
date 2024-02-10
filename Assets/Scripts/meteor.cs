@@ -65,8 +65,9 @@ public class meteor : MonoBehaviour
     {
         if (meteorHealthPercentage < 0.2f)
         {
-            Destroy(GameObject.FindGameObjectWithTag("Meteor"));
-            Destroy(GameObject.FindGameObjectWithTag("ColdMeteor"));
+            Destroy(gameObject);
+            //Destroy(GameObject.FindGameObjectWithTag("Meteor"));
+            //Destroy(GameObject.FindGameObjectWithTag("ColdMeteor"));
 
             Vector3 spawnPos = transform.position + new Vector3(Random.Range(-1, 1), 0, 0);
             Rigidbody2D CopyOfObject = Instantiate(fuel, spawnPos, Quaternion.identity);
@@ -76,7 +77,7 @@ public class meteor : MonoBehaviour
 
         }
         transform.Rotate(new Vector3(0,0, -20) * Time.deltaTime);
-        transform.position += new Vector3(0, -1, 0) * speed * SpeedMultiplier * Time.deltaTime; 
+        transform.position += new Vector3(0, -1, 0) * speed * Time.deltaTime; 
         
     }
 

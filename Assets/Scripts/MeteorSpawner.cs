@@ -12,13 +12,13 @@ public class MeteorSpawner : MonoBehaviour
     [SerializeField] float _positionRange = 0.45f;
     public UnityEvent OnMeteorDestroy;
     GameObject CopyOfObject;
-
+    public GameManager GameManager;
 
     private void Awake()
     {
         if (_timer > _maxTime)
         {
-            SpawnFuel();
+            SpawnMeteor();
             _timer = 0;
         }
     }
@@ -28,28 +28,32 @@ public class MeteorSpawner : MonoBehaviour
     {
         if (_timer > _maxTime)
         {
-            SpawnFuel();
+            SpawnMeteor();
             _timer = 0;
         }
         _timer += Time.deltaTime;
+
+     
     }
 
-    void SpawnFuel()
+    void SpawnMeteor()
     {
      
         int index = Random.Range(0, ArrayObject.Length);
         Vector3 spawnPos = transform.position + new Vector3(Random.Range(-_positionRange, _positionRange),0,0);
         CopyOfObject= Instantiate(ArrayObject[index], spawnPos, Quaternion.identity);
 
-        
-       
-            
+
+        CopyOfObject.GetComponent<meteor>().SpeedMultiplier = GameManager.getSpeedMultiplier();
+
         CopyOfObject.GetComponent<meteor>().OnDestroy.AddListener(invokeEvents);
        
             
 
         Destroy(CopyOfObject, 10f);
     }
+
+  
 
     public void invokeEvents()
     {

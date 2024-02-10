@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class eyes : MonoBehaviour
 {
-    public float speed = 100f; // Duration of tween to move missile in
+    public float speed = 120f; // Duration of tween to move missile in
     public float waitTime = 2f; // Time to wait before super speed down
     public float superSpeedDuration = 0.5f; // Duration of super speed down
     public float superSpeedDistance = 10f; // Distance to move during super speed down

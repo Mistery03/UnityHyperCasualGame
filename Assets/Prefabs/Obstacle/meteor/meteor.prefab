@@ -167,7 +167,7 @@ MonoBehaviour:
   MaxMeteorHealth: 1000
   meteorHealthPercentage: 0
   SpeedMultiplier: 1
-  speed: 2
+  speed: 10
   meteorite: {fileID: 4766806856241808255}
   fuel: {fileID: 1977694268850418637, guid: 63e7909bf3a45a44ab919a95470a0df7, type: 3}
   OnDestroy:

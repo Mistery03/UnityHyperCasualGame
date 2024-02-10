@@ -12,7 +12,7 @@ public class spaceshipPlayer : MonoBehaviour
 
     public AudioSource missleSFX;
 
-    public UnityEvent OnRunOutOfFuel, OnLevelUp, OnHitFreeze;
+    public UnityEvent OnRunOutOfFuel, OnLevelUp, OnHitFreeze, OnFuelFreeze;
     public UnityEvent<Collision2D> OnHit;
     public float MaxFuel = 100;
     public float CurrentFuel, FuelFillAmount, DrainAmount;
@@ -145,7 +145,7 @@ public class spaceshipPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        OnHit.Invoke(collision);
+       
         
        
         if (collision.gameObject.tag == "shoot")
@@ -160,8 +160,10 @@ public class spaceshipPlayer : MonoBehaviour
             if (!isFreeze)
                 StartCoroutine(ActivateFreeze());
 
-       
-        }
+            OnFuelFreeze.Invoke();
+
+        }else
+            OnHit.Invoke(collision);
 
         Destroy(collision.gameObject);
 
@@ -255,7 +257,7 @@ public class spaceshipPlayer : MonoBehaviour
 
     IEnumerator ActivateFreeze()
     {
-        float freezeDuration = duration - 7;
+        float freezeDuration = 2;
         isFreeze = true;
        
 
