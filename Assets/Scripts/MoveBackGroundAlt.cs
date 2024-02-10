@@ -65,18 +65,20 @@ public class MoveBackGroundAlt : MonoBehaviour
         // Move the background
         transform.position = _startPos + Vector2.down * newPosition;
 
+       
         // Update the current speed in the game manager
         GameManager.setCurrentSpeed(currentSpeed);
+        GameManager.setOriginalSpeed(OriginalSpeed);
     }
 
     public void increaseSpeed()
     {
-        OriginalSpeed += 200f;
+        OriginalSpeed += 100f;
     }
 
     public void decreaseSpeed()
     {
-        OriginalSpeed -= 200f;
+        OriginalSpeed -= 250f;
     }
 
     public float getCurrentSpeed() { return OriginalSpeed; }

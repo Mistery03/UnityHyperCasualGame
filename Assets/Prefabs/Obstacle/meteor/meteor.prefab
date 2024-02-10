@@ -166,17 +166,20 @@ MonoBehaviour:
   CurrentMeteorHealth: 0
   MaxMeteorHealth: 1000
   meteorHealthPercentage: 0
-  SpeedMultiplier: 4
-  speed: 4
+  SpeedMultiplier: 1
+  speed: 2
   meteorite: {fileID: 4766806856241808255}
   fuel: {fileID: 1977694268850418637, guid: 63e7909bf3a45a44ab919a95470a0df7, type: 3}
+  OnDestroy:
+    m_PersistentCalls:
+      m_Calls: []
   OnHit:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9201106019092973554}
         m_TargetAssemblyTypeName: meteor, Assembly-CSharp
         m_MethodName: DamageMeteor
-        m_Mode: 3
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -185,9 +188,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  OnDestroy:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &4766806856241808255
 Rigidbody2D:
   serializedVersion: 4

@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 11767204}
   - component: {fileID: 11767203}
-  - component: {fileID: 11767205}
+  - component: {fileID: 11767206}
   m_Layer: 0
   m_Name: spaceBackground
   m_TagString: Background
@@ -208,7 +208,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!114 &11767205
+--- !u!114 &11767206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,13 +217,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 11767202}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e49c73da1f11b248ab4629fe313054c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b6e8ec9ac365f643a5368cf828a3574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OriginalSpeed: 600
-  currentSpeed: 0
+  OriginalSpeed: 500
   GameManager: {fileID: 169040302}
-  _width: 8
+  _width: 6
+  fuelLevelMultipliers:
+  - fuelLevelThreshold: 0.75
+    speedMultiplier: 1
+    scoreMultiplier: 0.01
+  - fuelLevelThreshold: 0.5
+    speedMultiplier: 2
+    scoreMultiplier: 0.1
+  - fuelLevelThreshold: 0.25
+    speedMultiplier: 4
+    scoreMultiplier: 1
+  - fuelLevelThreshold: 0.1
+    speedMultiplier: 8
+    scoreMultiplier: 3
+  - fuelLevelThreshold: 0.01
+    speedMultiplier: 10
+    scoreMultiplier: 10
 --- !u!1 &81061830
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,17 +498,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnLowFuel:
+    m_PersistentCalls:
+      m_Calls: []
   gameOverUI: {fileID: 1713676232}
   ScoreText: {fileID: 343859423}
   ScoreHudText: {fileID: 667334097}
   LevelText: {fileID: 900774700}
   LevelHudText: {fileID: 802983220}
+  WarningFuelAlertText: {fileID: 1741608472}
+  WarningSpeedAlertText: {fileID: 2142473072}
   scoreAmount: 100
   scoreMultiplier: 1
   speedMultiplier: 1
   totalScore: 0
   currentLevel: 0
   currentSpeed: 0
+  originalSpeed: 0
   meteorite: {fileID: 9201106019092973554, guid: e3f8e85ad1dcf68478ef772eadfaae69, type: 3}
 --- !u!4 &169040303
 Transform:
@@ -608,8 +629,8 @@ MonoBehaviour:
   UpgradeSpeed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11767205}
-        m_TargetAssemblyTypeName: MoveBackGround, Assembly-CSharp
+      - m_Target: {fileID: 11767206}
+        m_TargetAssemblyTypeName: MoveBackGroundAlt, Assembly-CSharp
         m_MethodName: increaseSpeed
         m_Mode: 1
         m_Arguments:
@@ -1032,11 +1053,11 @@ MonoBehaviour:
       - m_Target: {fileID: 169040302}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: IncreaseScore
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 500
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1759,7 +1780,7 @@ PrefabInstance:
       objectReference: {fileID: 396050508}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: MaxFuel
-      value: 700
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: missile
@@ -1771,7 +1792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: isFiring
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: isFreeze
@@ -1783,7 +1804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: CurrentFuel
-      value: 600
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: DrainAmount
@@ -1831,7 +1852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHit.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -1912,11 +1933,11 @@ PrefabInstance:
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11767205}
+      objectReference: {fileID: 11767206}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 11767205}
+      objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1927,15 +1948,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnLevelUp.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnRunOutOfFuel.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2019,7 +2040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MoveBackGround, Assembly-CSharp
+      value: MoveBackGroundAlt, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2424552445675340261, guid: c4980319fbed96149a0a66ba8a23307c, type: 3}
       propertyPath: OnHitFreeze.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -2290,6 +2311,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7600873556339305776, guid: e3dc5e3704d544946ab01d87c0adec5a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 802983219}
+    - targetCorrespondingSourceObject: {fileID: 7600873556339305776, guid: e3dc5e3704d544946ab01d87c0adec5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1741608471}
+    - targetCorrespondingSourceObject: {fileID: 7600873556339305776, guid: e3dc5e3704d544946ab01d87c0adec5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2142473071}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8808550636502234026, guid: e3dc5e3704d544946ab01d87c0adec5a, type: 3}
       insertIndex: -1
@@ -2564,7 +2591,7 @@ MonoBehaviour:
   UpgradeSpeed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11767205}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MoveBackGround, Assembly-CSharp
         m_MethodName: increaseSpeed
         m_Mode: 1
@@ -2646,7 +2673,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2829,6 +2856,88 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6784693299700076467, guid: ffc5ec578d3a2124792a64a9e0a531f1, type: 3}
   m_PrefabInstance: {fileID: 250096689}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1741608470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1741608471}
+  - component: {fileID: 1741608473}
+  - component: {fileID: 1741608472}
+  m_Layer: 5
+  m_Name: LowFuel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1741608471
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741608470}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1743130700}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -8, y: 192}
+  m_SizeDelta: {x: 400.01, y: 87.53}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1741608472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741608470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: cb7b2009f709720459a835bb8240dd9f, type: 3}
+    m_FontSize: 72
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 3
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'LOW FUEL!
+
+'
+--- !u!222 &1741608473
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741608470}
+  m_CullTransparentMesh: 1
 --- !u!1 &1743130694 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8808550636502234026, guid: e3dc5e3704d544946ab01d87c0adec5a, type: 3}
@@ -2901,9 +3010,21 @@ MonoBehaviour:
   - {fileID: 2753073158994547249, guid: 927a662cf15496049b2794c8395823e0, type: 3}
   - {fileID: 3883832236036645920, guid: 5630962f09d77234dbfade5b3d4abda6, type: 3}
   _positionRange: 2
-  OnMeteorDestroy:
+  OnEyesDestroy:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 169040302}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: IncreaseScore
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1000
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1875240363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2997802764300511643, guid: e3dc5e3704d544946ab01d87c0adec5a, type: 3}
@@ -3000,6 +3121,86 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930796909}
+  m_CullTransparentMesh: 1
+--- !u!1 &2142473070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2142473071}
+  - component: {fileID: 2142473073}
+  - component: {fileID: 2142473072}
+  m_Layer: 5
+  m_Name: LowSpeed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2142473071
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142473070}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1743130700}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -8, y: 80.72}
+  m_SizeDelta: {x: 400.01, y: 87.53}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2142473072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142473070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: cb7b2009f709720459a835bb8240dd9f, type: 3}
+    m_FontSize: 72
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 3
+    m_AlignByGeometry: 1
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: LOW SPEED!
+--- !u!222 &2142473073
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142473070}
   m_CullTransparentMesh: 1
 --- !u!1 &2144296693
 GameObject:

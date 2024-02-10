@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class eyes : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class eyes : MonoBehaviour
     public float superSpeedDistance = 10f; // Distance to move during super speed down
     public float rotationSpeed = 360f;
     public float unitDistance = 3f;
+
+    public UnityEvent OnDestroy;
 
     private void Start()
     {
@@ -91,7 +94,15 @@ public class eyes : MonoBehaviour
         // Object reached the target position, perform actions here
     }
 
- 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "missile")
+        {
+            Destroy(collision.gameObject);
+            OnDestroy.Invoke();
+            Destroy(gameObject);
+        }
+    }
 
-   
+
 }

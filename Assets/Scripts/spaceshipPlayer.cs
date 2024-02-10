@@ -102,14 +102,13 @@ public class spaceshipPlayer : MonoBehaviour
     {
         // Get the acceleration value along the x-axis
         x = Input.acceleration.x;
-        y = Input.acceleration.y;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0) * _speed * Time.deltaTime;
         transform.position += movement;
-        transform.position += new Vector3(x * _speed * Time.deltaTime, y * _speed * Time.deltaTime, 0);
+        transform.position += new Vector3(x * _speed * Time.deltaTime,0, 0);
     }
 
     void shootProjectile()
@@ -146,36 +145,26 @@ public class spaceshipPlayer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Meteor")
-        {
-            OnHit.Invoke(collision);
-            Destroy(collision.gameObject);
-
-        }
-        else if (collision.gameObject.tag == "ColdMeteor")
-        {
-            OnHitFreeze.Invoke();
-            Destroy(collision.gameObject);
-        }
-        else if (collision.gameObject.tag == "shoot")
+        OnHit.Invoke(collision);
+        
+       
+        if (collision.gameObject.tag == "shoot")
         {
             if(!isFiring)
                 StartCoroutine(ActivateShootPowerUp());
         
-            Destroy(collision.gameObject);
+        
         }
         else if (collision.gameObject.tag == "freeze")
         {
             if (!isFreeze)
                 StartCoroutine(ActivateFreeze());
 
-            Destroy(collision.gameObject);
+       
         }
-        else if (collision.gameObject.tag == "eyes")
-        {
-            OnHit.Invoke(collision);
-            Destroy(collision.gameObject);
-        }
+
+        Destroy(collision.gameObject);
+
     }
 
     public float getFuelLevel()
@@ -206,10 +195,22 @@ public class spaceshipPlayer : MonoBehaviour
                 CurrentFuel -= FuelFillAmount*2;
                 FuelBar.SetFuel(CurrentFuel);
             }
+            else if (collidedObject.gameObject.tag == "ColdMeteor")
+            {
+                
+                CurrentFuel -= FuelFillAmount * 0.5f;
+                FuelBar.SetFuel(CurrentFuel);
+            }
 
 
         }
-        
+
+        if (collidedObject.gameObject.tag == "ColdMeteor")
+            OnHitFreeze.Invoke();
+
+
+
+
     }
 
     public void LevelUpSpaceship()
@@ -224,9 +225,15 @@ public class spaceshipPlayer : MonoBehaviour
 
     public void increaseSpaceShipFuel()
     {
-        MaxFuel += 100;
+        if(!(MaxFuel >= 1000))
+        {
+            MaxFuel += 100;
+            CurrentFuel = MaxFuel;
+            FuelBar.setMaxFuel(MaxFuel);
+            
+        }
+
         CurrentFuel = MaxFuel;
-        FuelBar.setMaxFuel(MaxFuel);
         FuelBar.SetFuel(CurrentFuel);
         isFreeze = false;
     }
@@ -248,13 +255,14 @@ public class spaceshipPlayer : MonoBehaviour
 
     IEnumerator ActivateFreeze()
     {
+        float freezeDuration = duration - 7;
         isFreeze = true;
        
 
         // Add your power-up effects here
         FuelBar.setIsFreeze(isFreeze);
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(freezeDuration);
 
  
         isFreeze = false;

@@ -12,6 +12,7 @@ TagManager:
   - freeze
   - ColdMeteor
   - speed
+  - eyes
   layers:
   - Default
   - TransparentFX

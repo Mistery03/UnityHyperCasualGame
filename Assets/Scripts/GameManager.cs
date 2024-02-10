@@ -9,14 +9,14 @@ public class GameManager : MonoBehaviour
 {
     public UnityEvent OnLowSpeed, OnLowFuel;
     public GameObject gameOverUI;
-    public Text ScoreText, ScoreHudText, LevelText, LevelHudText, WarningAlertText;
+    public Text ScoreText, ScoreHudText, LevelText, LevelHudText, WarningFuelAlertText, WarningSpeedAlertText;
     public float scoreAmount;
     public float scoreMultiplier, speedMultiplier;
     public float totalScore;
     public int currentLevel;
-    public float currentSpeed;
+    public float currentSpeed, originalSpeed;
 
-    bool isWarningDisplayed;
+    bool isFuelWarningDisplayed, isSpeedWarningDisplayed;
 
     public meteor meteorite;
 
@@ -37,7 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        WarningAlertText.text = null;
+        WarningFuelAlertText.text = null;
+        WarningSpeedAlertText.text = null;
     }
 
     private void Update()
@@ -49,18 +50,30 @@ public class GameManager : MonoBehaviour
         if(currentSpeed <= 0)
             OnLowSpeed.Invoke();
 
-
-        if(getSpaceshipFuelLevel() <= 0.30 && !isWarningDisplayed)
+        if (currentSpeed <= 2 * speedMultiplier && !isSpeedWarningDisplayed)
         {
-            WarningAlertText.text = "LOW FUEL!";
-            isWarningDisplayed = true;
-            StartBlink();
+            WarningSpeedAlertText.text = "LOW SPEED!";
+            isSpeedWarningDisplayed = true;
+            StartSpeedBlink();
+        }else if (currentSpeed > 2 * speedMultiplier && isSpeedWarningDisplayed)
+        {
+            WarningSpeedAlertText.text = "";
+            isSpeedWarningDisplayed = false;
+            StopSpeedBlink();
         }
-        else if(getSpaceshipFuelLevel() > 0.30 && isWarningDisplayed)
+
+
+        if (getSpaceshipFuelLevel() <= 0.30 && !isFuelWarningDisplayed)
         {
-            WarningAlertText.text = "";
-            isWarningDisplayed = false;
-            StopBlink();
+            WarningFuelAlertText.text = "LOW FUEL!";
+            isFuelWarningDisplayed = true;
+            StartFuelBlink();
+        }
+        else if(getSpaceshipFuelLevel() > 0.30 && isFuelWarningDisplayed)
+        {
+            WarningFuelAlertText.text = "";
+            isFuelWarningDisplayed = false;
+            StopFuelBlink();
         }
            
            
@@ -132,7 +145,7 @@ public class GameManager : MonoBehaviour
 
     private void CalculateScore()
     {
-        totalScore += scoreMultiplier * scoreAmount * Time.deltaTime;
+        totalScore += scoreMultiplier *  currentSpeed * scoreAmount * Time.deltaTime;
       
     }
 
@@ -141,9 +154,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    public void IncreaseScore()
+    public void IncreaseScore(int score)
     {
-        totalScore += 1000;
+        totalScore += score;
       
         
     }
@@ -152,7 +165,8 @@ public class GameManager : MonoBehaviour
     {
         LevelHudText.enabled = false;
         ScoreHudText.enabled = false;
-        WarningAlertText.enabled= false;
+        WarningSpeedAlertText.enabled = false;
+        WarningFuelAlertText.enabled= false;
 
     }
 
@@ -160,7 +174,8 @@ public class GameManager : MonoBehaviour
     {
         LevelHudText.enabled = true;
         ScoreHudText.enabled = true;
-        WarningAlertText.enabled = true;
+        WarningSpeedAlertText.enabled = true;
+        WarningFuelAlertText.enabled = true;
     }
 
     public void setCurrentSpeed(float speed)
@@ -168,33 +183,74 @@ public class GameManager : MonoBehaviour
         currentSpeed = speed;
     }
 
-    private IEnumerator Blink()
+    public void setOriginalSpeed(float speed)
+    {
+        originalSpeed = speed;
+    }
+
+    private IEnumerator FuelBlink()
     {
         while (true)
         {
-            switch (WarningAlertText.color.a.ToString())
+            switch (WarningFuelAlertText.color.a.ToString())
             {
                 case "0":
-                    WarningAlertText.color = new Color(WarningAlertText.color.r, WarningAlertText.color.g, WarningAlertText.color.b, 1);
+                    WarningFuelAlertText.color = new Color(WarningFuelAlertText.color.r, WarningFuelAlertText.color.g, WarningFuelAlertText.color.b, 1);
                     yield return new WaitForSeconds(0.5f);
                     break;
                 case "1":
-                    WarningAlertText.color = new Color(WarningAlertText.color.r, WarningAlertText.color.g, WarningAlertText.color.b, 0);
+                    WarningFuelAlertText.color = new Color(WarningFuelAlertText.color.r, WarningFuelAlertText.color.g, WarningFuelAlertText.color.b, 0);
                     yield return new WaitForSeconds(0.5f);
                     break;
             }
+
+          
         }
     }
 
-    public void StartBlink()
+    private IEnumerator SpeedBlink()
     {
-        StopCoroutine("Blink");
-        StartCoroutine("Blink");
+        while (true)
+        {
+            switch (WarningSpeedAlertText.color.a.ToString())
+            {
+                case "0":
+                    WarningSpeedAlertText.color = new Color(WarningSpeedAlertText.color.r, WarningSpeedAlertText.color.g, WarningSpeedAlertText.color.b, 1);
+                    yield return new WaitForSeconds(0.5f);
+                    break;
+                case "1":
+                    WarningSpeedAlertText.color = new Color(WarningSpeedAlertText.color.r, WarningSpeedAlertText.color.g, WarningSpeedAlertText.color.b, 0);
+                    yield return new WaitForSeconds(0.5f);
+                    break;
+            }
+
+
+        }
     }
 
-    public void StopBlink()
+    
+
+
+    public void StartFuelBlink()
     {
-        StopCoroutine("Blink");
+        StopCoroutine("FuelBlink");
+        StartCoroutine("FuelBlink");
+    }
+
+    public void StopFuelBlink()
+    {
+        StopCoroutine("FuelBlink");
+
+    }
+    public void StartSpeedBlink()
+    {
+        StopCoroutine("SpeedBlink");
+        StartCoroutine("SpeedBlink");
+    }
+
+    public void StopSpeedBlink()
+    {
+        StopCoroutine("SpeedBlink");
    
     }
 

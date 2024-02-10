@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,9 +15,10 @@ public class meteor : MonoBehaviour
     public Rigidbody2D meteorite;
     public Rigidbody2D fuel;
 
-    public UnityEvent OnHit, OnDestroy;
+    public UnityEvent OnDestroy;
+    public UnityEvent<Collision2D> OnHit;
 
- 
+
     void Start()
     {
         CurrentMeteorHealth = MaxMeteorHealth;
@@ -30,9 +32,8 @@ public class meteor : MonoBehaviour
         if(collision.gameObject.tag == "missile")
         {
             Destroy(collision.gameObject);
-            OnHit.Invoke();
-        }else if(collision.gameObject.tag == "Player")
-            OnHit.Invoke();
+            OnHit.Invoke(collision);
+        }
         
             
 
@@ -65,7 +66,7 @@ public class meteor : MonoBehaviour
         if (meteorHealthPercentage < 0.2f)
         {
             Destroy(GameObject.FindGameObjectWithTag("Meteor"));
-           
+            Destroy(GameObject.FindGameObjectWithTag("ColdMeteor"));
 
             Vector3 spawnPos = transform.position + new Vector3(Random.Range(-1, 1), 0, 0);
             Rigidbody2D CopyOfObject = Instantiate(fuel, spawnPos, Quaternion.identity);
@@ -79,9 +80,10 @@ public class meteor : MonoBehaviour
         
     }
 
-    public void DamageMeteor(int dmg)
+    public void DamageMeteor(Collision2D collidedObject)
     {
-        CurrentMeteorHealth -= dmg;
+        
+        CurrentMeteorHealth -= collidedObject.gameObject.GetComponent<projectile>().MissileDamage;
         meteorHealthPercentage = CurrentMeteorHealth /MaxMeteorHealth;
         ScaleObject(meteorHealthPercentage);
     }
