@@ -162,14 +162,20 @@ public class spaceshipPlayer : MonoBehaviour
 
             OnFuelFreeze.Invoke();
 
-        }else
+        }
+        else if (collision.gameObject.tag == "eldrithHorror")
+        {
+            OnRunOutOfFuel.Invoke();
+
+        }
+        else
         {
             OnHit.Invoke(collision);
             crashSFX.Play();
-        }    
-            
+        }
 
-        Destroy(collision.gameObject);
+        if (!(collision.gameObject.tag == "eldrithHorror"))
+            Destroy(collision.gameObject);
 
     }
 
@@ -276,6 +282,8 @@ public class spaceshipPlayer : MonoBehaviour
 
         // Clean up or remove power-up effects here
     }
+
+
 
 
 }

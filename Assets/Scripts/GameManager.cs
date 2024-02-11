@@ -9,16 +9,18 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public UnityEvent OnLowSpeed, OnLowFuel;
-    public GameObject gameOverUI;
+    public GameObject gameOverUI, pauseUI, eldritchBeing;
     public Text ScoreText, ScoreHudText, LevelText, LevelHudText, WarningFuelAlertText, WarningSpeedAlertText;
     public RectTransform phoneSymbolTransform;
-    public float scoreAmount;
+    public float scoreAmount, _timer, _deathTimer;
     public float scoreMultiplier, speedMultiplier;
     public float totalScore;
     public int currentLevel;
     public float currentSpeed, originalSpeed;
-    private Vector3 targetPosition;
+    private Vector3 targetPosition, EldritchtargetPosition;
     public float smoothness = 0.5f;
+    public float superSpeedDistance = 3f; 
+    public float superSpeedDuration = 10f;
 
     bool isFuelWarningDisplayed, isSpeedWarningDisplayed;
 
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
         WarningFuelAlertText.text = null;
         WarningSpeedAlertText.text = null;
         targetPosition = phoneSymbolTransform.position + Vector3.down * 10;
+        EldritchtargetPosition = transform.position - Vector3.down * 2;
     }
 
     private void Update()
@@ -51,22 +54,39 @@ public class GameManager : MonoBehaviour
         CalculateScore();
         scoreHUD(totalScore);
         //meteorite.SpeedMultiplier = getSpeedMultiplier();
-        phoneSymbolTransform.position = Vector3.Lerp(phoneSymbolTransform.position, targetPosition, smoothness * Time.deltaTime);
+        if (_timer > 2)
+            phoneSymbolTransform.position = Vector3.Lerp(phoneSymbolTransform.position, targetPosition, smoothness * Time.deltaTime);
+
+        _timer += Time.deltaTime;
 
 
         if (currentSpeed <= 0)
             OnLowSpeed.Invoke();
+
+        if(isSpeedWarningDisplayed)
+            _deathTimer += Time.deltaTime;
+
+        if (_deathTimer > 3.5)
+        {
+            Vector3 endPosition = EldritchtargetPosition + Vector3.up * superSpeedDistance;
+            StartCoroutine(MoveObjectUP(eldritchBeing.transform, endPosition, superSpeedDuration));
+        }
+
 
         if (currentSpeed <= 2 * speedMultiplier && !isSpeedWarningDisplayed)
         {
             WarningSpeedAlertText.text = "LOW SPEED!";
             isSpeedWarningDisplayed = true;
             StartSpeedBlink();
-        }else if (currentSpeed > 2 * speedMultiplier && isSpeedWarningDisplayed)
+
+        }
+        else if (currentSpeed > 2 * speedMultiplier && isSpeedWarningDisplayed)
         {
+            
             WarningSpeedAlertText.text = "";
             isSpeedWarningDisplayed = false;
             StopSpeedBlink();
+            _deathTimer = 0;
         }
 
 
@@ -104,6 +124,18 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(true);
         ScoreText.text = "SCORE: " + ((int)totalScore).ToString();
         LevelText.text = "LEVEL: " + (currentLevel).ToString();
+    }
+
+    public void OpenPauseMenu()
+    {
+        pauseUI.SetActive(true);
+      
+    }
+
+    public void ClosePauseMenu()
+    {
+        pauseUI.SetActive(false);
+
     }
 
     public void restart()
@@ -162,6 +194,10 @@ public class GameManager : MonoBehaviour
       
     }
 
+    public void Pause()
+    {
+        Time.timeScale = 0.0f;
+    }
     public void unPause()
     {
         Time.timeScale = 1.0f;
@@ -267,6 +303,23 @@ public class GameManager : MonoBehaviour
    
     }
 
+    private IEnumerator MoveObjectUP(Transform objectTransform, Vector3 targetPosition, float duration)
+    {
+        float elapsedTime = 0f;
+        Vector3 startingPosition = objectTransform.position;
+
+        // Move the object downward with super speed
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            objectTransform.position = Vector3.Lerp(startingPosition, targetPosition, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        objectTransform.position = targetPosition;
+
+        // Object reached the target position, perform actions here
+    }
 
 
 

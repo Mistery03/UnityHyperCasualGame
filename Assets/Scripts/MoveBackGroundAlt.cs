@@ -73,7 +73,7 @@ public class MoveBackGroundAlt : MonoBehaviour
 
     public void increaseSpeed()
     {
-        OriginalSpeed += 100f;
+        OriginalSpeed += 200f;
     }
 
     public void decreaseSpeed(float speed)

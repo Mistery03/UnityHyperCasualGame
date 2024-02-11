@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class MeteorSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField]float _maxTime = 3f;
+    [SerializeField]float _maxTime = 5f;
     float _timer;
     public GameObject [] ArrayObject;
     [SerializeField] float _positionRange = 0.45f;

@@ -13,6 +13,7 @@ TagManager:
   - ColdMeteor
   - speed
   - eyes
+  - eldrithHorror
   layers:
   - Default
   - TransparentFX

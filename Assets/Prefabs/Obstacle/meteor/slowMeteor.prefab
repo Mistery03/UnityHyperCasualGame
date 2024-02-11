@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4766806856241808255, guid: e3f8e85ad1dcf68478ef772eadfaae69, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     - target: {fileID: 6602264474714263170, guid: e3f8e85ad1dcf68478ef772eadfaae69, type: 3}
       propertyPath: m_Name
       value: slowMeteor

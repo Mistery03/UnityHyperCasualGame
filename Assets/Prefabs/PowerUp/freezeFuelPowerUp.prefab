@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2576851503653211739}
   - component: {fileID: 1245308375480739496}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: snowflake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5721908221297529097}
   - component: {fileID: 5424515525754879898}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: FuelCell_small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2753073158994547249, guid: 927a662cf15496049b2794c8395823e0, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2753073158994547249, guid: 927a662cf15496049b2794c8395823e0, type: 3}
       propertyPath: m_TagString
@@ -234,7 +234,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3561771261952533640, guid: 927a662cf15496049b2794c8395823e0, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4988123091596404734, guid: 927a662cf15496049b2794c8395823e0, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 6440792000799236595, guid: 927a662cf15496049b2794c8395823e0, type: 3}
       propertyPath: m_Color.a
