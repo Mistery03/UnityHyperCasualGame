@@ -4,17 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public UnityEvent OnLowSpeed, OnLowFuel;
     public GameObject gameOverUI;
     public Text ScoreText, ScoreHudText, LevelText, LevelHudText, WarningFuelAlertText, WarningSpeedAlertText;
+    public RectTransform phoneSymbolTransform;
     public float scoreAmount;
     public float scoreMultiplier, speedMultiplier;
     public float totalScore;
     public int currentLevel;
     public float currentSpeed, originalSpeed;
+    private Vector3 targetPosition;
+    public float smoothness = 0.5f;
 
     bool isFuelWarningDisplayed, isSpeedWarningDisplayed;
 
@@ -39,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         WarningFuelAlertText.text = null;
         WarningSpeedAlertText.text = null;
+        targetPosition = phoneSymbolTransform.position + Vector3.down * 10;
     }
 
     private void Update()
@@ -46,8 +51,10 @@ public class GameManager : MonoBehaviour
         CalculateScore();
         scoreHUD(totalScore);
         //meteorite.SpeedMultiplier = getSpeedMultiplier();
+        phoneSymbolTransform.position = Vector3.Lerp(phoneSymbolTransform.position, targetPosition, smoothness * Time.deltaTime);
 
-        if(currentSpeed <= 0)
+
+        if (currentSpeed <= 0)
             OnLowSpeed.Invoke();
 
         if (currentSpeed <= 2 * speedMultiplier && !isSpeedWarningDisplayed)
@@ -102,6 +109,12 @@ public class GameManager : MonoBehaviour
     public void restart()
     {
         SceneManager.LoadScene("GameScene");
+
+    }
+
+    public void returnMainMenu()
+    {
+        SceneManager.LoadScene(0);
         
     }
 

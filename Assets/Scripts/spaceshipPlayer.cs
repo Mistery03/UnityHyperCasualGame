@@ -10,7 +10,7 @@ public class spaceshipPlayer : MonoBehaviour
     float _speed, x, y;
     Vector2 _screenBounds;
 
-    public AudioSource missleSFX;
+    public AudioSource missleSFX, crashSFX;
 
     public UnityEvent OnRunOutOfFuel, OnLevelUp, OnHitFreeze, OnFuelFreeze;
     public UnityEvent<Collision2D> OnHit;
@@ -163,7 +163,11 @@ public class spaceshipPlayer : MonoBehaviour
             OnFuelFreeze.Invoke();
 
         }else
+        {
             OnHit.Invoke(collision);
+            crashSFX.Play();
+        }    
+            
 
         Destroy(collision.gameObject);
 
