@@ -10,9 +10,9 @@ public class spaceshipPlayer : MonoBehaviour
     float _speed, x, y;
     Vector2 _screenBounds;
 
-    public AudioSource missleSFX, crashSFX;
+    public AudioSource missleSFX, crashSFX, windSFX, eldritchSFX, gameMusic;
 
-    public UnityEvent OnRunOutOfFuel, OnLevelUp, OnHitFreeze, OnFuelFreeze;
+    public UnityEvent OnRunOutOfFuel, OnLevelUp, OnHitFreeze, OnFuelFreeze, OnHitEldricth,OnSpeed;
     public UnityEvent<Collision2D> OnHit;
     public float MaxFuel = 100;
     public float CurrentFuel, FuelFillAmount, DrainAmount;
@@ -36,8 +36,11 @@ public class spaceshipPlayer : MonoBehaviour
 
     public float duration = 10f;
 
+    private Vector3 velocity = Vector3.zero;
+    public float smoothingFactor = 0.1f;
 
-    public float spawnRate = 0.1f; // Adjust this value to control the spawn rate
+
+    public float spawnRate = 0.4f; // Adjust this value to control the spawn rate
 
     private float timeSinceLastSpawn = 0f;
     [SerializeField] private GameObject _spaceBackground;
@@ -46,7 +49,7 @@ public class spaceshipPlayer : MonoBehaviour
 
     void Start()
     {
-        _speed = 10.0f;
+        _speed = 15.0f;
         Input.gyro.enabled = true;
         FuelBar.setMaxFuel(MaxFuel);
         FuelBar.SetFuel(CurrentFuel);
@@ -73,7 +76,7 @@ public class spaceshipPlayer : MonoBehaviour
                 drainFuel(DrainAmount);
 
             if (CurrentFuel <= 0)
-                OnRunOutOfFuel.Invoke();
+                CurrentFuel = 0;
                 
 
             // Increment the timer
@@ -101,14 +104,24 @@ public class spaceshipPlayer : MonoBehaviour
     void SpaceshipMovement()
     {
         // Get the acceleration value along the x-axis
-        x = Input.acceleration.x;
+        //x = Input.acceleration.x;
+
+        Vector3 accelerometerInput = Input.acceleration;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0) * _speed * Time.deltaTime;
         transform.position += movement;
-        transform.position += new Vector3(x * _speed * Time.deltaTime,0, 0);
+
+        velocity = Vector3.Lerp(velocity, accelerometerInput, smoothingFactor);
+        // Calculate the movement along the x-axis based on the smoothed input
+        float moveX = velocity.x * _speed * Time.deltaTime;
+
+        // Move the spaceship horizontally
+        transform.Translate(moveX, 0, 0);
+        //transform.position += new Vector3(x * _speed * Time.deltaTime,0, 0);
+
     }
 
     void shootProjectile()
@@ -161,11 +174,18 @@ public class spaceshipPlayer : MonoBehaviour
                 StartCoroutine(ActivateFreeze());
 
             OnFuelFreeze.Invoke();
+            windSFX.Play();
 
+        }
+        else if (collision.gameObject.tag == "speed")
+        {
+            OnSpeed.Invoke();
         }
         else if (collision.gameObject.tag == "eldrithHorror")
         {
             OnRunOutOfFuel.Invoke();
+            OnHitEldricth.Invoke();
+            eldritchSFX.Play();
 
         }
         else
@@ -186,11 +206,12 @@ public class spaceshipPlayer : MonoBehaviour
 
     public void GameOverScreen()
     {
+        gameMusic.Stop();
         GameManager.GameOver(GameManager.totalScore);
         isRanOutFuel = true;
         GameManager.disableHUDTexts();
         Time.timeScale = 0f;
-     
+        
 
     }
 
@@ -212,6 +233,7 @@ public class spaceshipPlayer : MonoBehaviour
                 
                 CurrentFuel -= FuelFillAmount * 0.5f;
                 FuelBar.SetFuel(CurrentFuel);
+                windSFX.Play();
             }
 
 
@@ -248,6 +270,16 @@ public class spaceshipPlayer : MonoBehaviour
         CurrentFuel = MaxFuel;
         FuelBar.SetFuel(CurrentFuel);
         isFreeze = false;
+    }
+
+    public void decreaseMissileFireRate()
+    {
+        if (!(spawnRate <= 0.1f))
+            spawnRate -= 0.1f;
+         
+
+        
+
     }
 
     IEnumerator ActivateShootPowerUp()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4480391862799396538}
   - component: {fileID: 6272447682068389658}
   - component: {fileID: 6337678617378706488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: eyes
   m_TagString: eyes
   m_Icon: {fileID: 0}

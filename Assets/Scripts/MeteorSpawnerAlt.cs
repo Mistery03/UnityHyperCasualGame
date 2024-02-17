@@ -75,4 +75,6 @@ public class MeteorSpawnerAlt : MonoBehaviour
     {
         OnMeteorDestroy.Invoke();
     }
+
+    
 }

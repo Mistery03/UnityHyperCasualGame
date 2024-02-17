@@ -71,9 +71,9 @@ public class MoveBackGroundAlt : MonoBehaviour
         GameManager.setOriginalSpeed(OriginalSpeed);
     }
 
-    public void increaseSpeed()
+    public void increaseSpeed(float speed)
     {
-        OriginalSpeed += 200f;
+        OriginalSpeed += speed;
     }
 
     public void decreaseSpeed(float speed)

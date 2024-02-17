@@ -48,7 +48,7 @@ public class meteor : MonoBehaviour
         healthPercentage = Mathf.Clamp01(healthPercentage);
 
         // Define the initial scale and the minimum scale you want to reach
-        Vector3 initialScale = new Vector3(5f,5f,5f);
+        Vector3 initialScale = new Vector3(2f,2f,2f);
         Vector3 minScale = new Vector3(0.1f, 0.1f, 0.1f);
 
         // Interpolate between the initial scale and the minimum scale based on health percentage

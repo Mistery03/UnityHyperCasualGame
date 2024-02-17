@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public float superSpeedDistance = 3f; 
     public float superSpeedDuration = 10f;
 
+    public bool isSelectorDisplayed;
+
     bool isFuelWarningDisplayed, isSpeedWarningDisplayed;
 
     public meteor meteorite;
@@ -61,13 +63,16 @@ public class GameManager : MonoBehaviour
 
 
         if (currentSpeed <= 0)
-            OnLowSpeed.Invoke();
-
-        if(isSpeedWarningDisplayed)
             _deathTimer += Time.deltaTime;
+
+
+        if (_deathTimer > 1.5 && isSpeedWarningDisplayed)
+            WarningSpeedAlertText.text = "GOODBYE CAPTAIN";
+
 
         if (_deathTimer > 3.5)
         {
+           
             Vector3 endPosition = EldritchtargetPosition + Vector3.up * superSpeedDistance;
             StartCoroutine(MoveObjectUP(eldritchBeing.transform, endPosition, superSpeedDuration));
         }
@@ -89,18 +94,26 @@ public class GameManager : MonoBehaviour
             _deathTimer = 0;
         }
 
+        if(getSpaceshipFuelLevel() == 0)
+            _deathTimer += Time.deltaTime;
+           
+        if(_deathTimer > 1.5 && isFuelWarningDisplayed)
+            WarningFuelAlertText.text = "GOODBYE CAPTAIN";
 
         if (getSpaceshipFuelLevel() <= 0.30 && !isFuelWarningDisplayed)
         {
+
             WarningFuelAlertText.text = "LOW FUEL!";
             isFuelWarningDisplayed = true;
             StartFuelBlink();
+           
         }
         else if(getSpaceshipFuelLevel() > 0.30 && isFuelWarningDisplayed)
         {
             WarningFuelAlertText.text = "";
             isFuelWarningDisplayed = false;
             StopFuelBlink();
+            _deathTimer = 0;
         }
            
            
@@ -128,12 +141,14 @@ public class GameManager : MonoBehaviour
 
     public void OpenPauseMenu()
     {
-        pauseUI.SetActive(true);
+        if(!isSelectorDisplayed)
+            pauseUI.SetActive(true);
       
     }
 
     public void ClosePauseMenu()
     {
+        
         pauseUI.SetActive(false);
 
     }
@@ -322,7 +337,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+  
 
 
 

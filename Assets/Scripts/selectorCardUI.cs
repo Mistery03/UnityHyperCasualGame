@@ -6,6 +6,7 @@ using UnityEngine;
 public class selectorCardUI : MonoBehaviour
 {
     public GameObject selector;
+    public GameManager GameManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +22,13 @@ public class selectorCardUI : MonoBehaviour
     public void openSelectorScreen()
     {
         selector.SetActive(true);
+        GameManager.isSelectorDisplayed = true;
     }
 
     public void closeSelectorScreen() 
     {
         selector.SetActive(false);
+        GameManager.isSelectorDisplayed = false;
     }
 
 

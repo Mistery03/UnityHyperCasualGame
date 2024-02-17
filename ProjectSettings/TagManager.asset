@@ -14,6 +14,7 @@ TagManager:
   - speed
   - eyes
   - eldrithHorror
+  - fireRate
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - UI
   - Meteor
   - Powerup
-  - 
+  - eyes
   - 
   - 
   - 
